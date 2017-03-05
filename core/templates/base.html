@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+
 {% load static %}
-<html lang="en">
+
+<html lang="pt-b">
 <head>
 	<meta charset="utf-8">
 	<title>{% block title %} Django E-Commerce {% endblock %}</title>
@@ -8,12 +10,13 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<link rel="stylesheet" href="{% static 'assets/bootstrap.min.css' %}" media="screen" />
 	<link rel="stylesheet" href="{% static 'assets/custom.min.css' %}" media="screen" />
+	<link rel="stylesheet" href="{% static 'assets/extra.css' %}" media="screen" />
 </head>
 <body>
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="../" class="navbar-brand">Django E-Commerce</a>
+          <a href="{% url 'core:index' %}" class="navbar-brand">Django E-Commerce</a>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -38,12 +41,17 @@
 			</li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Minha Conta</a></li>
+            {% if user.is_authenticated %}
+			<li><a href="{% url 'accounts:logout' %}">Sair</a></li>
+			{% else %}
+			<li><a href="{% url 'accounts:login' %}">Entrar</a></li>
+            <li><a href="{% url 'accounts:register' %}">Registrar</a></li>
+			{% endif %}
           </ul>
         </div>
       </div>
     </div>
-    <div class="container">
+    <div class="container margin-top">
 
         {% block container %}{% endblock %}
 
